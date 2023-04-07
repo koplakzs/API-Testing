@@ -12,6 +12,7 @@ class _PostScreenState extends State<PostScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        color: const Color.fromARGB(255, 60, 212, 18),
         child: const Text('Ini Post Screen'),
       ),
     );
