@@ -2,19 +2,19 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../models/get_users.dart';
 
-Future<List<User>> gets() async {
+Future gets() async {
   var urlApi = 'https://reqres.in/api/users?page=1';
   final response = await http.get(Uri.parse(urlApi));
 
   print(response.statusCode);
 
   if (response.statusCode == 200) {
-    var getUsersData = jsonDecode(response.body);
+    var getUsersData = jsonDecode(response.body) as Map<String, dynamic>;
+    // var getUser = getUsersData['data'] as List;
+    // var user = getUsersData.map((e) => User.fromJson(e)).toList();
+    // print(user);
     print(getUsersData);
-    var getUser = getUsersData['data'] as List;
-    var user = getUser.map((e) => User.fromJson(e)).toList();
-
-    return user;
+    return getUsersData;
   } else {
     throw Exception('Failed to Load Data');
   }

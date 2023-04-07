@@ -2,6 +2,7 @@ import 'package:api_testing/core/get_data_user.dart';
 import 'package:api_testing/models/get_users.dart';
 import 'package:api_testing/widget/user.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 
 class GetScreen extends StatefulWidget {
   const GetScreen({super.key});
@@ -11,7 +12,7 @@ class GetScreen extends StatefulWidget {
 }
 
 class _GetScreenState extends State<GetScreen> {
-  late Future<List<User>> user;
+  late Future user;
 
   @override
   void initState() {
@@ -30,26 +31,31 @@ class _GetScreenState extends State<GetScreen> {
           future: user,
           builder: (context, snapshot) {
             if (snapshot.hasData && snapshot.data != null) {
+              final List<dynamic> dataList = snapshot.data['data'];
+              final List<User> userList =
+                  dataList.map((e) => User.fromJson(e)).toList();
               return ListView.separated(
                   itemBuilder: ((context, index) {
-                    var users = (snapshot.data as List<User>)[index];
+                    // var datas = (snapshot.data['data'] as List<User>)[index];
+                    var datas = userList[index];
                     return Column(
                       children: [
                         WidgetUser(
                             user: User(
-                                firstName: users.firstName,
-                                lastName: users.lastName,
-                                avatar: users.avatar)),
+                                firstName: datas.firstName,
+                                lastName: datas.lastName,
+                                avatar: datas.avatar)),
                         const SizedBox(
                           height: 10,
-                        )
+                        ),
+                        Text(snapshot.data['total'].toString())
                       ],
                     );
                   }),
                   separatorBuilder: (context, index) {
                     return const Divider();
                   },
-                  itemCount: (snapshot.data as List<User>).length);
+                  itemCount: userList.length);
             } else if (snapshot.hasError) {
               return Text('${snapshot.error}');
             }
