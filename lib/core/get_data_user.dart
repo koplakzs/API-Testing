@@ -9,12 +9,16 @@ Future gets() async {
   print(response.statusCode);
 
   if (response.statusCode == 200) {
-    var getUsersData = jsonDecode(response.body) as Map<String, dynamic>;
-    // var getUser = getUsersData['data'] as List;
-    // var user = getUsersData.map((e) => User.fromJson(e)).toList();
-    // print(user);
-    print(getUsersData);
-    return getUsersData;
+    var getUsersData = jsonDecode(response.body);
+    var getUser = getUsersData['data'] as List;
+    var users = getUser.map((e) => User.fromJson(e)).toList();
+    var total = getUsersData['total'];
+    print(users);
+    print(total);
+    return {
+      'users': users,
+      'total': total,
+    };
   } else {
     throw Exception('Failed to Load Data');
   }
