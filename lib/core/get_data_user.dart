@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import '../models/get_users.dart';
 
 Future gets() async {
-  var urlApi = 'https://reqres.in/api/users?page=1';
+  String urlApi = 'https://reqres.in/api/users?page=1';
   final response = await http.get(Uri.parse(urlApi));
 
   print(response.statusCode);
