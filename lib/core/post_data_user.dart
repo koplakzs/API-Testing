@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:api_testing/models/post_users.dart';
 import 'package:http/http.dart' as http;
 
 Future postData(String name, String job) async {
