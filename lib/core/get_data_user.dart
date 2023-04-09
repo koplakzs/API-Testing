@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../models/get_users.dart';
 
-Future gets() async {
-  String urlApi = 'https://reqres.in/api/users?page=1';
+Future gets({String? page}) async {
+  String urlApi = 'https://reqres.in/api/users?page=$page';
   final response = await http.get(Uri.parse(urlApi));
 
   print(response.statusCode);
